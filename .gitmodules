@@ -1,3 +1,6 @@
 [submodule "darkstar"]
 	path = darkstar
 	url = git@github.com:AdamGagorik/darkstar.git
+[submodule "pydarkstar"]
+	path = pydarkstar
+	url = git@github.com:AdamGagorik/pydarkstar.git
