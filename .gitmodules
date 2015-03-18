@@ -1,0 +1,3 @@
+[submodule "darkstar"]
+	path = darkstar
+	url = git@github.com:AdamGagorik/darkstar.git
