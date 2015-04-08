@@ -149,7 +149,7 @@ def setup_sql_data(sdir):
         (0, 'triggers.sql'),
         (0, 'water_points.sql'),
         (0, 'weapon_skills.sql'),
-        (0, 'zone_settings.sql'),
+        (1, 'zone_settings.sql'),
         (0, 'zone_weather.sql'),
         (0, 'zonelines.sql'),
     ]
