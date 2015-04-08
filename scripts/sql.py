@@ -26,6 +26,8 @@ class SQLData:
         assert os.path.dirname(self.path) == self.root
         self.exists = os.path.exists(self.path)
         self.new = bool(new)
+        self.stub, self.ext = os.path.splitext(self.name)
+        assert self.ext.lower() == '.sql'
 
     def __str__(self):
         return '[SQL] kind={s.kind:d} exists={s.exists:d} new={s.new:d}, {s.name}'.format(s=self)
