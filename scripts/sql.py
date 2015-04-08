@@ -242,6 +242,15 @@ class Options:
         for k in opts.__dict__.keys():
             setattr(self, k, opts.__dict__[k])
 
+        if opts.verbose:
+            setup_logging(level=logging.DEBUG)
+        else:
+            setup_logging(level=logging.INFO)
+
+        logging.debug('tdir: %s', self.tdir)
+        logging.debug('bdir: %s', self.sdir)
+        logging.debug('sdir: %s', self.bdir)
+
         assert os.path.exists(self.tdir)
         assert os.path.exists(self.sdir)
 
@@ -278,11 +287,6 @@ def update(sql_data, all_data=False, force=False, kind=0):
 
 def main():
     opts = Options()
-
-    if opts.verbose:
-        setup_logging(level=logging.DEBUG)
-    else:
-        setup_logging(level=logging.INFO)
 
     sql_data = setup_sql_data(sdir=opts.sdir)
 
