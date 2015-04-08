@@ -1,6 +1,7 @@
 from subprocess import check_output, CalledProcessError
 import contextlib
 import argparse
+import datetime
 import logging
 import sys
 import os
@@ -267,14 +268,37 @@ def chdir(path):
         os.chdir(work)
 
 
-def backup(sql_data, all_data=False, force=False, kind=1):
+def cmd_backup(**kwargs):
+    cmd = 'mysqldump -u {username} -p{password} {database} {stub} > {stub}.sql'
+    return cmd.format(**kwargs)
+
+
+def backup(bdir, sql_data, username, database, password, all_data=False, force=False, kind=1):
     logging.info('backing up data')
     logging.info(' --force = %s', force)
     logging.info(' --kind  = %d', kind)
     logging.info(' --all   = %s', all_data)
-    for sql in sql_data:
-        if all_data or sql.kind == kind:
-            logging.info('%s', sql)
+
+    with chdir(bdir):
+
+        path = 'backup_{}'.format(datetime.datetime.now().strftime('%Y_%m_%d'))
+        path = os.path.join(os.getcwd(), path)
+
+        if not os.path.exists(path):
+            logging.info('mkdir -p %s', path)
+            if force:
+                os.makedirs(path)
+
+        for sql in sql_data:
+            if all_data or sql.kind == kind:
+                c = cmd_backup(username=username, database=database, password=password, stub=sql.stub)
+                logging.info(c)
+                if force:
+                    with chdir(path):
+                        os.system(c)
+
+        if not force:
+            logging.info('use --force to perform operations')
 
 
 def cmd_update(**kwargs):
@@ -307,7 +331,7 @@ def main():
     sql_data = setup_sql_data(sdir=opts.sdir)
 
     if opts.backup:
-        backup(sql_data, all_data=opts.all, force=opts.force)
+        backup(opts.bdir, sql_data, opts.username, opts.database, opts.password, all_data=opts.all, force=opts.force)
 
     if opts.update:
         update(opts.sdir, sql_data, opts.username, opts.database, opts.password, all_data=opts.all, force=opts.force)
