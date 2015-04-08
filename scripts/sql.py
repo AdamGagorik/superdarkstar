@@ -300,6 +300,7 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except:
-        logging.exception('caught unhandled exception')
-        raise SystemExit(-1)
+    except Exception as e:
+        if not isinstance(e, SystemExit):
+            logging.exception('caught unhandled exception')
+            raise SystemExit(-1)
