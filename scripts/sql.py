@@ -200,10 +200,11 @@ def gitcommand():
 
 def toplevel():
     try:
-        top = check_output([gitcommand(), 'rev-parse', '--show-toplevel']).decode()
+        top = check_output([gitcommand(), 'rev-parse', '--show-toplevel'])
+        top = top.decode().strip()
 
         if sys.platform.startswith('win'):
-            top = os.sep.join(top.split('/')).strip()
+            top = os.sep.join(top.split('/'))
 
     except CalledProcessError:
         top = os.getcwd()
