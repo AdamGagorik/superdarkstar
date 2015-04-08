@@ -29,6 +29,7 @@ class SQLData:
         self.new = bool(new)
         self.stub, self.ext = os.path.splitext(self.name)
         assert self.ext.lower() == '.sql'
+        self.table = self.stub
 
     def __str__(self):
         return '[SQL] kind={s.kind:d} exists={s.exists:d} new={s.new:d}, {s.name}'.format(s=self)
@@ -190,6 +191,9 @@ def setup_sql_data(sdir):
     if error:
         raise RuntimeError('Errors found in SQL data')
 
+    by_key = { x.stub : x for x in sql_data }
+    by_key['blacklist'].table = 'char_blacklist'
+
     return sql_data
 
 
@@ -269,7 +273,7 @@ def chdir(path):
 
 
 def cmd_backup(**kwargs):
-    cmd = 'mysqldump -u {username} -p{password} {database} {stub} > {stub}.sql'
+    cmd = 'mysqldump -u {username} -p{password} {database} {table} > {name}'
     return cmd.format(**kwargs)
 
 
@@ -291,7 +295,7 @@ def backup(bdir, sql_data, username, database, password, all_data=False, force=F
 
         for sql in sql_data:
             if all_data or sql.kind == kind:
-                c = cmd_backup(username=username, database=database, password=password, stub=sql.stub)
+                c = cmd_backup(username=username, database=database, password=password, table=sql.table, name=sql.name)
                 logging.info(c)
                 if force:
                     with chdir(path):
@@ -302,7 +306,7 @@ def backup(bdir, sql_data, username, database, password, all_data=False, force=F
 
 
 def cmd_update(**kwargs):
-    cmd = 'mysql -D {database} -u {username} -p{password} < {stub}.sql'
+    cmd = 'mysql -D {database} -u {username} -p{password} < {name}'
     return cmd.format(**kwargs)
 
 
@@ -316,7 +320,7 @@ def update(sdir, sql_data, username, database, password, all_data=False, force=F
 
         for sql in sql_data:
             if all_data or sql.kind == kind:
-                c = cmd_update(username=username, database=database, password=password, stub=sql.stub)
+                c = cmd_update(username=username, database=database, password=password, name=sql.name)
                 logging.info(c)
                 if force:
                     os.system(c)
