@@ -277,21 +277,29 @@ def backup(sql_data, all_data=False, force=False, kind=1):
             logging.info('%s', sql)
 
 
-def update(sql_data, username, database, password, all_data=False, force=False, kind=0):
+def cmd_update(**kwargs):
+    cmd = 'mysql -D {database} -u {username} -p{password} < {stub}.sql'
+    return cmd.format(**kwargs)
+
+
+def update(sdir, sql_data, username, database, password, all_data=False, force=False, kind=0):
     logging.info('updating data')
     logging.info(' --force = %s', force)
     logging.info(' --kind  = %d', kind)
     logging.info(' --all   = %s', all_data)
-    cmd = 'mysql -D {database} -u {username} -p{password} < {f}'
-    for sql in sql_data:
-        if all_data or sql.kind == kind:
-            c = cmd.format(username=username, database=database, password='******', f=sql.name)
-            logging.info(c)
-            if force:
-                c = cmd.format(username=username, database=database, password=password, f=sql.path)
-                os.system(c)
-    if not force:
-        logging.info('use --force to perform operations')
+
+    with chdir(sdir):
+
+        for sql in sql_data:
+            if all_data or sql.kind == kind:
+                c = cmd_update(username=username, database=database, password=password, stub=sql.stub)
+                logging.info(c)
+                if force:
+                    os.system(c)
+
+        if not force:
+            logging.info('use --force to perform operations')
+
 
 def main():
     opts = Options()
@@ -302,7 +310,7 @@ def main():
         backup(sql_data, all_data=opts.all, force=opts.force)
 
     if opts.update:
-        update(sql_data, opts.username, opts.database, opts.password, all_data=opts.all, force=opts.force)
+        update(opts.sdir, sql_data, opts.username, opts.database, opts.password, all_data=opts.all, force=opts.force)
 
 
 if __name__ == '__main__':
