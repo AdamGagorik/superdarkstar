@@ -12,6 +12,14 @@ git checkout master
 git remote remove upstream || true
 git remote add upstream git@github.com:DarkstarProject/darkstar.git
 git remote -v
+git fetch upstream
+git fetch origin
+git checkout cmake
+git checkout settings
+git checkout state
+git checkout master
+git branch -a
+git status
 cd ${TOPLEVEL}
 
 cd ./pydarkstar
