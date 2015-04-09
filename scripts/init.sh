@@ -17,6 +17,7 @@ git fetch origin
 git checkout cmake
 git checkout settings
 git checkout state
+git checkout gitignore
 git checkout master
 git branch -a
 git status
