@@ -233,6 +233,7 @@ class Options:
         self.update = False
         self.force = False
         self.verbose = False
+        self.restore = None
         self.hostname = '127.0.0.1'
         self.database = 'dspdb'
         self.username = 'root'
@@ -242,6 +243,7 @@ class Options:
         parser.add_argument('--verbose', action='store_true', help='verbose logging')
         parser.add_argument('--backup', action='store_true', help='backup sql data')
         parser.add_argument('--update', action='store_true', help='update sql data')
+        parser.add_argument('--restore', default=self.restore, help='restore from backup')
         parser.add_argument('--force', action='store_true', help='perform commands')
         parser.add_argument('--all', action='store_true', help='consider all data')
         opts = parser.parse_args()
@@ -261,6 +263,10 @@ class Options:
         assert os.path.exists(self.tdir)
         assert os.path.exists(self.sdir)
 
+        if opts.restore:
+            self.rdir = os.path.join(self.bdir, self.restore)
+            assert os.path.exists(self.rdir)
+            logging.debug('rdir: %s', self.rdir)
 
 @contextlib.contextmanager
 def chdir(path):
@@ -320,10 +326,13 @@ def update(sdir, sql_data, username, database, password, all_data=False, force=F
 
         for sql in sql_data:
             if all_data or sql.kind == kind:
-                c = cmd_update(username=username, database=database, password=password, name=sql.name)
-                logging.info(c)
-                if force:
-                    os.system(c)
+                if os.path.exists(sql.name):
+                    c = cmd_update(username=username, database=database, password=password, name=sql.name)
+                    logging.info(c)
+                    if force:
+                        os.system(c)
+                else:
+                    logging.error('missing %s!', sql.name)
 
         if not force:
             logging.info('use --force to perform operations')
@@ -339,6 +348,9 @@ def main():
 
     if opts.update:
         update(opts.sdir, sql_data, opts.username, opts.database, opts.password, all_data=opts.all, force=opts.force)
+
+    if opts.restore:
+        update(opts.rdir, sql_data, opts.username, opts.database, opts.password, all_data=opts.all, force=opts.force, kind=1)
 
 
 if __name__ == '__main__':
