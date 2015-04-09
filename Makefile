@@ -40,3 +40,7 @@ running:
 .PHONY: backup
 backup:
 	-@python ./scripts/sql.py --backup --force
+
+.PHONY: log
+log:
+	cd ./darkstar; python ../scripts/cleanlog.py
