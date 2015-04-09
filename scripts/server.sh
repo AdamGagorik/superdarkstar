@@ -16,6 +16,7 @@ if [ ${BRANCH} = "server" ]; then
     git rebase state
     git rebase cmake
     git rebase settings
+    git rebase commands
     git rebase gitignore
 fi
 

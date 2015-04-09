@@ -18,6 +18,7 @@ git checkout cmake
 git checkout settings
 git checkout state
 git checkout gitignore
+git checkout commands
 git checkout master
 git branch -a
 git status
