@@ -99,7 +99,7 @@ def setup_sql_data(sdir):
         (1, 'char_vars.sql'),
         (1, 'char_weapon_skill_points.sql'),
         (1, 'chars.sql'),
-        (0, 'conquest_system.sql'),
+        (1, 'conquest_system.sql'),
         (1, 'delivery_box.sql'),
         (0, 'elevators.sql'),
         (0, 'exp_base.sql'),
