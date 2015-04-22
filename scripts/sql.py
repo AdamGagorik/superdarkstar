@@ -124,7 +124,6 @@ def setup_sql_data(sdir):
         (0, 'item_weapon.sql'),
         (1, 'linkshells.sql'),
         (0, 'merits.sql'),
-        (0, 'mob_change_skin.sql'),
         (0, 'mob_droplist.sql'),
         (0, 'mob_family_mods.sql'),
         (0, 'mob_family_system.sql'),
