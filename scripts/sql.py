@@ -96,6 +96,7 @@ def setup_sql_data(sdir):
         (1, 'char_skills.sql'),
         (1, 'char_stats.sql'),
         (1, 'char_storage.sql'),
+        (1, 'char_style.sql'),
         (1, 'char_vars.sql'),
         (1, 'char_weapon_skill_points.sql'),
         (1, 'chars.sql'),
