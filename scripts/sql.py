@@ -156,6 +156,7 @@ def setup_sql_data(sdir):
         (1, 'zone_settings.sql'),
         (0, 'zone_weather.sql'),
         (0, 'zonelines.sql'),
+        (0, 'update_drop_rates.sql'),
     ]
     sql_data = [SQLData(sdir, n, k) for k, n in sql_data]
 
