@@ -5,7 +5,7 @@ DSLOGIN=$1
 cd "${TOPLEVEL}"
 cd ./pydarkstar/bin
 
-screen -d -m -S pydarkstar ./broker.sh items.csv
+screen -d -m -S pydarkstar ./pydarkstar.sh broker
 
 echo "****************************************"
 echo "* AH SERVER STARTED                    *"
