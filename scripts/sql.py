@@ -88,6 +88,7 @@ def setup_sql_data(sdir):
         (1, 'char_inventory.sql'),
         (1, 'char_jobs.sql'),
         (1, 'char_look.sql'),
+        (1, 'char_merits.sql'),
         (1, 'char_pet.sql'),
         (1, 'char_pet_name.sql'),
         (1, 'char_points.sql'),
