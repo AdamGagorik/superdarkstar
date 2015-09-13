@@ -7,6 +7,8 @@ Super project for DarkStar server
 ```bash
 cd ./superdarkstar
 make stop
+make stop
+make stop
 make start
 ```
 
