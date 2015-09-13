@@ -2,18 +2,83 @@
 
 Super project for DarkStar server
 
-# setup
+# How to star the server
 
 ```bash
-./scripts/init.sh
+cd ./superdarkstar
+make stop
+make start
 ```
 
-# sql
+# How to stop the server
+
+```bash
+cd ./superdarkstar
+make stop
+make stop
+make stop
+```
+
+# How to check the server status
+
+```bash
+cd ./superdarkstar
+make
+```
+
+If the server is running, you will see something like this.
+
+```bash
+ffxi     12687  0.0  0.0  27060  1276 ?        Ss   13:35   0:00 SCREEN -d -m -L -S dsconnect ./dsconnect
+ffxi     12700  0.0  0.0  27340  1760 ?        Ss   13:35   0:00 SCREEN -d -m -L -S dsgame ./dsgame
+ffxi     12693  0.0  0.0  27060  1276 ?        Ss   13:35   0:00 SCREEN -d -m -L -S dssearch ./dssearch
+ffxi     12706  0.0  0.0  27056  1280 ?        Ss   13:35   0:00 SCREEN -d -m -S pydarkstar ./pydarkstar.sh broker
+```
+
+If the server is not running, you will see something like this.
+
+```bash
+make: [running] Error 1 (ignored)
+make: [running] Error 1 (ignored)
+make: [running] Error 1 (ignored)
+make: [running] Error 1 (ignored)
+```
+
+# How to attach to the game server (to see it's output)
+
+```bash
+make game
+```
+
+The output of the game server will now display to the screen.
+
+## IMPORTANT: How to detach the console from the game server
+
+Enter the following to detach.  Detaching in any other way may crash the game server.
+
+```bash
+<CTRL> + a
+d
+```
+
+# How to attach to other servers.
+
+Similar to the directions for the game server, you can attach the console to the login, search, and AH servers.
+
+```bash
+make login
+make search
+make ah
+```
+
+# notes : git
 
 ```git
 git ls file
 git diff comm^ HEAD -- file
 ```
+
+# notes : sql
 
 ```mysql
 mysql -u root -p____ -Ddspdb
