@@ -2,7 +2,7 @@
 
 Super project for DarkStar server
 
-# How to star the server
+# Start the server
 
 ```bash
 cd ./superdarkstar
@@ -10,7 +10,7 @@ make stop
 make start
 ```
 
-# How to stop the server
+# Stop the server
 
 ```bash
 cd ./superdarkstar
@@ -19,14 +19,14 @@ make stop
 make stop
 ```
 
-# How to check the server status
+# Check the server status
 
 ```bash
 cd ./superdarkstar
 make
 ```
 
-If the server is running, you will see something like this.
+#### If the server is running, you will see something like this.
 
 ```bash
 ffxi     12687  0.0  0.0  27060  1276 ?        Ss   13:35   0:00 SCREEN -d -m -L -S dsconnect ./dsconnect
@@ -35,7 +35,7 @@ ffxi     12693  0.0  0.0  27060  1276 ?        Ss   13:35   0:00 SCREEN -d -m -L
 ffxi     12706  0.0  0.0  27056  1280 ?        Ss   13:35   0:00 SCREEN -d -m -S pydarkstar ./pydarkstar.sh broker
 ```
 
-If the server is not running, you will see something like this.
+#### If the server is not running, you will see something like this.
 
 ```bash
 make: [running] Error 1 (ignored)
@@ -44,13 +44,35 @@ make: [running] Error 1 (ignored)
 make: [running] Error 1 (ignored)
 ```
 
-# How to attach to the game server (to see it's output)
+# Attach to the game server
 
 ```bash
 make game
 ```
 
 The output of the game server will now display to the screen.
+
+#### If the server is running, you will see something like this.
+
+```bash
+[Status] Memory manager initialised: log/DSP.leaks
+[Info] DarkStar - Git Revision Hash: Unknown.
+[Status] do_init: begin server initialization...
+[2015-Sep-13 14:16:02][Info] Console Silent Setting: 0                    - [OK]
+[2015-Sep-13 14:16:02][Status] do_init: map_config is reading             - [OK]
+[2015-Sep-13 14:16:02][Status] luautils::init:lua initializing...         - [OK]
+[2015-Sep-13 14:16:02][Status] do_init: sqlhandle is allocating           - [OK]
+[2015-Sep-13 14:16:02][Status] do_init: zlib is reading                   - [OK]
+[2015-Sep-13 14:16:02][Status] do_init: loading items                     - [OK]
+[2015-Sep-13 14:16:02][Status] do_init: loading spells                    - [OK]
+[2015-Sep-13 14:16:02][Debug] UpdateGuildPointsPattern is finished. New pattern: 3
+[2015-Sep-13 14:16:02][Status] do_init: loading zones                     - [OK]
+[2015-Sep-13 14:16:08][Status] do_init: server is binding with port 54230 - [OK]
+[2015-Sep-13 14:16:08][Debug] InitializeWeather Finished
+[2015-Sep-13 14:16:08][Status] The map-server is ready to work...
+=======================================================================
+[2015-Sep-13 14:16:08][Debug] [Lua] Garbage Collected. Current State Top: 0
+```
 
 ## IMPORTANT: How to detach the console from the game server
 
@@ -61,7 +83,7 @@ Enter the following to detach.  Detaching in any other way may crash the game se
 d
 ```
 
-# How to attach to other servers.
+# Attach to other servers.
 
 Similar to the directions for the game server, you can attach the console to the login, search, and AH servers.
 
