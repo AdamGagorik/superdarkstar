@@ -76,9 +76,9 @@ The output of the game server will now display to the screen.
 [2015-Sep-13 14:16:08][Debug] [Lua] Garbage Collected. Current State Top: 0
 ```
 
-## IMPORTANT: How to detach the console from the game server
+## IMPORTANT: Detach the console from the game server
 
-Enter the following to detach.  Detaching in any other way may crash the game server.
+Enter the following to detach.  Detaching in any other way may crash the game server.  This includes closing the console window while the game server is attached.
 
 ```bash
 <CTRL> + a
