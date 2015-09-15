@@ -8,7 +8,7 @@ cleanup ()
     echo "********************************************************************************"
     echo ""
     echo ""
-    find . -maxdepth 5 -name core.* | xargs -I xxx mv xxx ~/superdarkstar/core/
+    find . -name "core.*" | xargs -I xxx mv xxx ~/superdarkstar/core/
 }
 
 trap cleanup INT TERM EXIT SIGINT SIGTERM SIGKILL SIGSEGV
