@@ -19,6 +19,9 @@ git checkout settings
 git checkout state
 git checkout gitignore
 git checkout commands
+git checkout print
+git checkout rate
+git checkout NPC
 git checkout master
 git branch -a
 git status
