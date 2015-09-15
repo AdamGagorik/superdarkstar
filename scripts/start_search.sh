@@ -5,7 +5,7 @@ DSLOGIN=$1
 cd "${TOPLEVEL}"
 cd ./darkstar
 
-screen -d -m -L -S dssearch ./dssearch
+screen -d -m -L -c ../scripts/screenrc.search -S dssearch ./dssearch
 
 echo "****************************************"
 echo "* SEARCH SERVER STARTED                *"

@@ -1,0 +1,2 @@
+logfile /home/ffxi/logs/game.log
+logfile flush 0
