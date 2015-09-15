@@ -11,28 +11,28 @@ help:
 	@echo "  make backup    : backup SQL data"
 
 start:
-	-@./scripts/start_login.sh
-	-@./scripts/start_search.sh
-	-@./scripts/start_game.sh
-	-@./scripts/start_ah.sh
+	-@./scripts/start/login.sh
+	-@./scripts/start/search.sh
+	-@./scripts/start/game.sh
+	-@./scripts/start/ah.sh
 
 stop:
-	-@./scripts/stop_login.sh
-	-@./scripts/stop_search.sh
-	-@./scripts/stop_game.sh
-	-@./scripts/stop_ah.sh
+	-@./scripts/stop/login.sh
+	-@./scripts/stop/search.sh
+	-@./scripts/stop/game.sh
+	-@./scripts/stop/ah.sh
 
 login:
-	-@./scripts/attach_login.sh
+	-@./scripts/attach/login.sh
 
 game:
-	-@./scripts/attach_game.sh
+	-@./scripts/attach/game.sh
 
 search:
-	-@./scripts/attach_search.sh
+	-@./scripts/attach/search.sh
 
 ah:
-	-@./scripts/attach_ah.sh
+	-@./scripts/attach/ah.sh
 
 running:
 	-@ps aux | grep "SCREEN.*dsconnect"  | grep -v grep
@@ -42,7 +42,7 @@ running:
 
 .PHONY: backup
 backup:
-	-@python ./scripts/sql.py --backup --force
+	-@python ./scripts/maintain/sql.py --backup --force
 
 .PHONY: log
 log:
