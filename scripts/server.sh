@@ -18,6 +18,11 @@ if [ ${BRANCH} = "server" ]; then
     git rebase settings
     git rebase commands
     git rebase gitignore
+    git rebase print
+    git rebase rate
+    git rebase NPC
 fi
 
 cd ${TOPLEVEL}
+
+
