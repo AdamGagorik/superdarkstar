@@ -1,2 +1,2 @@
-logfile /home/ffxi/logs/login.log
+logfile /home/ffxi/superdarkstar/logs/login.log
 logfile flush 0
