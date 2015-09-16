@@ -69,3 +69,20 @@ running:
 .PHONY: backup
 backup:
 	-@python ./scripts/maintain/sql.py --backup --force
+
+.PHONY: log
+log: gamelog
+
+ahlog:
+	tail -n 100 ./log/ah.log
+
+gamelog:
+	tail -n 100 ./log/game.log
+
+loginlog:
+	tail -n 100 ./log/login.log
+
+searchlog:
+	tail -n 100 ./log/search.log
+
+
