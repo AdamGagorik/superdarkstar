@@ -9,7 +9,7 @@ echo "LEVEL 1: fetch"
 echo "LEVEL 2: ls"
 echo "LEVEL 3: merge"
 echo "LEVEL 4: rebase"
-echo "LEVEL 4: rebase all"
+echo "LEVEL 5: rebase all"
 
 BRANCH=`git rev-parse --abbrev-ref HEAD`
 git checkout master
