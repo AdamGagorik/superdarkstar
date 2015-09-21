@@ -6,11 +6,11 @@ cd ./darkstar
 
 git checkout server
 
-rm -rf ./build
-mkdir ./build
-cd ./build
+rm -rf ./build-clang
+mkdir ./build-clang
+cd ./build-clang
 
-cmake ..
+CXX=/usr/bin/clang++ CC=/usr/bin/clang cmake ..
 make -j 4
 make install
 
