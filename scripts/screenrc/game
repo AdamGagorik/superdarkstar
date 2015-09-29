@@ -1,2 +1,2 @@
-logfile ~/superdarkstar/log/game.log
-logfile flush 0
+logfile /home/ffxi/superdarkstar/log/game.log
+logfile flush 1
