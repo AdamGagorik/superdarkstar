@@ -1,4 +1,4 @@
 #!/bin/bash -e
-killall python
-killall python
-killall python
+killall python3
+killall python3
+killall python3
