@@ -3,8 +3,9 @@
 cleanup ()
 {
     RV=$?
+    STOP=$(date '+%Y-%m-%d %H:%M:%S')
     echo ""
-    echo "* STOP"
+    echo "* STOP : ${STOP}"
     echo "********************************************************************************"
     echo ""
     echo ""
