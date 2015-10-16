@@ -1,5 +1,6 @@
 from subprocess import check_output, CalledProcessError
 import contextlib
+import colorama
 import argparse
 import datetime
 import logging
@@ -247,6 +248,7 @@ class Options:
         parser.add_argument('--verbose', action='store_true', help='verbose logging')
         parser.add_argument('--backup', action='store_true', help='backup sql data')
         parser.add_argument('--update', action='store_true', help='update sql data')
+        parser.add_argument('--changes', action='store_true', help='show last change in sql data')
         parser.add_argument('--restore', default=self.restore, help='restore from backup')
         parser.add_argument('--force', action='store_true', help='perform commands')
         parser.add_argument('--all', action='store_true', help='consider all data')
@@ -342,10 +344,79 @@ def update(sdir, sql_data, username, database, password, all_data=False, force=F
             logging.info('use --force to perform operations')
 
 
+class Commit(object):
+    def __init__(self):
+        self.githash = None
+        self.ct = None
+        self.cr = None
+
+    def __str__(self):
+        return 'Commit(hash={self.githash}, ct={self.ct})'.format(self=self)
+
+def get_commit_data(filename, n=1):
+    o = check_output(['git', 'log', '-n', str(n), '--pretty=format:%H|%ct|%cr', '--', filename])
+
+    commits = []
+    for line in o.decode('utf-8').split('\n'):
+        tokens = line.strip().split('|')
+        commit = Commit()
+        commit.githash = tokens[0]
+        commit.ct = datetime.datetime.fromtimestamp(int(tokens[1]))
+        commit.cr = tokens[2]
+        commits.append(commit)
+
+    return commits
+
+
+def changes(sdir, sql_data, username, database, password, all_data=False, kind=1):
+    logging.info('looking for changes')
+    logging.info(' --kind  = %d', kind)
+    logging.info(' --all   = %s', all_data)
+
+    now = datetime.datetime.now()
+    work = os.getcwd()
+    fmt0 = '{color}%-32s{reset} : %s -- {color}%s{reset}'
+    fmt1 = fmt0.format(reset='', color='')
+    fmt2 = fmt0.format(reset=colorama.Fore.RESET, color=colorama.Fore.GREEN)
+    fmt3 = fmt0.format(reset=colorama.Fore.RESET, color=colorama.Fore.YELLOW)
+    fmt4 = fmt0.format(reset=colorama.Fore.RESET, color=colorama.Fore.RED)
+
+    with chdir(sdir):
+
+        issues = []
+        for sql in sql_data:
+            if all_data or sql.kind == kind:
+                if os.path.exists(sql.name):
+                    commits = get_commit_data(sql.name)
+                    delta = now - commits[0].ct
+                    if delta < datetime.timedelta(days=5):
+                        logging.info(fmt4, sql.name, commits[0].ct, commits[0].cr)
+                        issues.append((sql.name, commits[0]))
+                    elif delta < datetime.timedelta(days=7*4):
+                        logging.info(fmt3, sql.name, commits[0].ct, commits[0].cr)
+                    elif delta < datetime.timedelta(days=7*8):
+                        logging.info(fmt2, sql.name, commits[0].ct, commits[0].cr)
+                    else:
+                        logging.info(fmt1, sql.name, commits[0].ct, commits[0].cr)
+                else:
+                    logging.error('missing %s!', sql.name)
+
+        if issues:
+            logging.info('%sthere may be some issues...%s', colorama.Fore.BLUE, colorama.Fore.RESET)
+            for name, commit in issues:
+                logging.info(fmt4, name, commit, commit.ct)
+                stub, ext = os.path.splitext(name)
+                os.system('git show %s -- %s >> %s.diff' % (commit.githash, name, os.path.join(work, stub)))
+
+
 def main():
     opts = Options()
 
     sql_data = setup_sql_data(sdir=opts.sdir)
+
+    if opts.changes:
+        changes(opts.sdir, sql_data, opts.username, opts.database, opts.password, all_data=opts.all)
+        exit(0)
 
     if opts.backup:
         backup(opts.bdir, sql_data, opts.username, opts.database, opts.password, all_data=opts.all, force=opts.force)
