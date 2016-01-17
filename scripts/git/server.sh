@@ -13,14 +13,11 @@ BRANCH=`git rev-parse --abbrev-ref HEAD`
 
 if [ ${BRANCH} = "server" ]; then
     echo ${BRANCH}
-    git rebase state
     git rebase cmake
     git rebase settings
-    git rebase commands
     git rebase gitignore
     git rebase print
     git rebase rate
-    git rebase NPC
 fi
 
 cd ${TOPLEVEL}
