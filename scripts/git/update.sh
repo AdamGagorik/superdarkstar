@@ -33,7 +33,7 @@ if [[ $LEVEL -eq 4 ]]; then
 fi
 
 if [[ $LEVEL -eq 5 ]]; then
-    for b in state cmake settings commands gitignore print rate NPC; do
+    for b in cmake settings gitignore print rate; do
         if git checkout $b; then
             if git rebase master; then
                 git push --force
